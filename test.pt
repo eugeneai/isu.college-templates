@@ -10,6 +10,6 @@
         </style>
     </tal:block>
     <tal:block metal:fill-slot="content">
-      Hello
+      <span tal:replace="structure view.content"/>
     </tal:block>
 </html>

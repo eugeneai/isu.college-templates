@@ -3,13 +3,20 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       metal:use-macro="main.macros['page']">
-    <tal:block metal:fill-slot="header-meta">
-        <style>
-         /* Font Definitions */
+  <tal:block metal:fill-slot="header-meta">
+    <link rel="stylesheet" href="/deform/css/form.css" type="text/css" />
+    <style>
+      /* Font Definitions */
 
-        </style>
-    </tal:block>
-    <tal:block metal:fill-slot="content">
-      <span tal:replace="structure view.form"/>
-    </tal:block>
+    </style>
+  </tal:block>
+  <tal:block metal:fill-slot="content">
+    <span tal:replace="structure view.form"/>
+  </tal:block>
+  <tal:black metal:fill-slot="script-src">
+    <script type="text/javascript"
+            src="/deform/scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript"
+            src="/deform/scripts/deform.js"></script>
+  </tal:black>
 </html>

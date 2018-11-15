@@ -11,6 +11,10 @@
         <h3 class="box-title" tal:content="view.fetch_title | default">Query Result</h3>
       </div>
       <div class="box-body">
+        <div>
+          <a href="" tal:attributes="href string:${request.url}/edit"
+             class="btn btn-primary">Add new</a>
+        </div>
         <table id="fetch-data" class="table table-bordered table-hover">
           <thead>
             <tr>
@@ -42,5 +46,22 @@
         </div>
       </div>
     </div>
+  </tal:block>
+  <tal:block metal:fill-slot="script-src">
+    <!-- DataTables -->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script>
+      $(function () {
+        $('#fetch-data').DataTable({
+          'paging'      : true,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : false
+        })
+      })
+</script>
   </tal:block>
 </html>

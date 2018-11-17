@@ -18,5 +18,7 @@
             src="/deform/scripts/jquery-2.0.3.min.js"></script>
     <script type="text/javascript"
             src="/deform/scripts/deform.js"></script>
+    <script type="text/javascript"
+            src="/APPSD/js/jquery.maskedinput.min.js"></script>
   </tal:black>
 </html>

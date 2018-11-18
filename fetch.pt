@@ -2,10 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="icc.quest"
       metal:use-macro="main.macros['page']">
   <tal:block metal:fill-slot="header-meta">
   </tal:block>
-  <tal:block metal:fill-slot="content">
+  <tal:block metal:fill-slot="content"
+             i18n:domain="icc.quest">
     <div class="box">
       <div class="box-header">
         <h3 class="box-title" tal:content="view.fetch_title | default">Query Result</h3>
@@ -13,7 +15,7 @@
       <div class="box-body">
         <div>
           <a href="" tal:attributes="href string:${request.url}/edit"
-             class="btn btn-primary">Add new</a>
+             class="btn btn-primary" i18n:translate="">Add new</a>
         </div>
         <table id="fetch-data" class="table table-bordered table-hover">
           <thead>
@@ -42,7 +44,7 @@
         </table>
         <div>
           <a href="" tal:attributes="href string:${request.url}/edit"
-             class="btn btn-primary">Add new</a>
+             class="btn btn-primary" i18n:translate="">Add new</a>
         </div>
       </div>
     </div>

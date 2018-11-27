@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{% block meta %}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+{% endblock %}
+<title>SACRUD{% block title %}{% endblock %}</title>
+
+{% block css %}
+  <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}"
+  rel="shortcut icon" type="image/x-icon" />
+  <link href="{{ request.static_url('pyramid_sacrud:static/css/__main.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+  <script src="{{ request.static_url('pyramid_sacrud:static/js/assets/__main.js') }}"></script>
+{% endblock %}
+</head>
+
+<body>
+  <div>
+  {% block menu %}
+    <nav>
+      <div class="nav-wrapper blue-grey darken-1">
+        <a {% if request.matched_route.name != PYRAMID_SACRUD_HOME %}
+            href="{{ request.route_url(PYRAMID_SACRUD_HOME) }}"
+           {% endif %} class="brand-logo left">
+           {% block menu_logo %}
+             SACRUD
+           {% endblock %}
+         </a>
+        {% block menu_inner %}
+        {% endblock %}
+      </div>
+    </nav>
+  {% endblock %}
+  <div class="container">
+
+    {% block popup %}
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          {% block popup_content %}{% endblock %}
+        </div>
+        <div class="modal-footer">
+          {% block popup_footer %}{% endblock %}
+        </div>
+      </div>
+    {% endblock %}
+
+    {% block breadcrumbs %}
+      {% set breadcrumbs = lineage(context)|reverse %}
+      {% if  breadcrumbs|length > 1 %}
+        <div class="nav">
+          <div class="breadcrumb grey-text">
+            <li><a href="{{ request.route_path(PYRAMID_SACRUD_HOME) }}">
+              {{ _ps(_("Home")) }}
+            </a></li>
+            {% for crumb in breadcrumbs %}
+              {% set crumb_name = _ps(_(crumb.__name__)) %}
+              {% if not loop.last %}
+                <li>
+                {% if getattr(crumb, 'breadcrumb', False) %}
+                  <a href="/{{ request.sacrud_prefix }}/{{ request.resource_path(crumb) }}">
+                    {{ crumb_name }}
+                  </a>
+                {% else %}
+                  {{ crumb_name }}
+                {% endif %}
+                </li>
+              {% else %}
+                <li>{{ crumb_name }}</li>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {% block flash_message %}
+      {% if request.session %}
+        {% if request.session.peek_flash() %}
+          {% set flash = request.session.pop_flash() %}
+          {% for message in flash %}
+            <div class="chip white-text
+              {% if message[1] == "success" %}
+                green
+              {% elif message[1] == "error" %}
+                red
+              {% elif message[1] == "warning" %}
+                yellow
+              {% endif %}">{{ _ps(message[0])|safe }}
+              <i class="material-icons">close</i>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+    {% endblock %}
+
+    {% block body %}{% endblock %}
+  </div>
+  {% block footer %}
+    <div class="container"><br/><br/></div>
+  {% endblock %}
+</div>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

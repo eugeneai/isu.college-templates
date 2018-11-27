@@ -1,0 +1,40 @@
+{% extends "sacrud/redefineme.jinja2" %}
+
+{% block title %} - home{% endblock %}
+
+{% block body %}
+  <div class="divider"></div>
+  <div class="section">
+    <h5>{{ _ps('Dashboard') }}</h5>
+  </div>
+
+  <div class="row">
+    {% if resources %}
+      {% for col in range(dashboard_row_len) %}
+        <div class="col s{{ (12/dashboard_row_len)|int }}">
+          {% if col <= resources|length %}
+            {% for widget, widget_resources in resources[col::dashboard_row_len] %}
+              {% if widget_resources %}
+                <div class="card hoverable">
+                  <div class="blue darken-2 center-align">
+                    <span class="card-title bold white-text">
+                      {{ _(widget.label or widget or '') }}
+                    </span>
+                  </div>
+                  <div class="collection" style="border:none;">
+                    {% for resource in widget_resources %}
+                      <a class="collection-item black-text"
+                        href="{{ request.resource_path(resource) }}"
+                        id="id_{{ resource.__name__ }}">
+                        {{ _(resource.verbose_name or resource.__name__) }}</a>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}

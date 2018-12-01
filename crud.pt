@@ -12,7 +12,7 @@
     </style>
   </tal:block>
   <tal:block metal:fill-slot="content">
-    <span tal:replace="structure view.content"/>
+    <span tal:replace="structure content | view.content"/>
   </tal:block>
   <tal:black metal:fill-slot="script-src">
     <script type="text/javascript"

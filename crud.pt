@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="icc.quest"
+      metal:use-macro="main.macros['page']">
+  <tal:block metal:fill-slot="header-meta">
+    <link rel="stylesheet" href="/deform/css/form.css" type="text/css" />
+    <style>
+      /* Font Definitions */
+
+    </style>
+  </tal:block>
+  <tal:block metal:fill-slot="content">
+    <span tal:replace="structure view.content"/>
+  </tal:block>
+  <tal:black metal:fill-slot="script-src">
+    <script type="text/javascript"
+            src="/deform/scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript"
+            src="/deform/scripts/deform.js"></script>
+    <script type="text/javascript"
+            src="/APPSD/js/jquery.maskedinput.min.js"></script>
+  </tal:black>
+</html>

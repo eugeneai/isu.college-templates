@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="icc.quest"
+      metal:use-macro="main.macros['page']">
+  <tal:block metal:fill-slot="header-meta">
+  </tal:block>
+  <tal:block metal:fill-slot="content"
+             i18n:domain="icc.quest">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title" tal:content="view.fetch_title | default">List of Tables</h3>
+      </div>
+      <div class="box-body">
+        <table id="fetch-data" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th style="text-align:center;width:3em;">№</th>
+              <th>&nbsp;</th>
+              <th i18n:translate=''>Relation name</th>
+              <th i18n:translate=''>Database table name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr tal:repeat="table context">
+              <td tal:content="repeat['table'].number" style="text-align:right;"></td>
+              <td width="1">
+                <a href="#" tal:attributes="href string:${request.route_path('crud-action',relation=table.name,action='browse')}" class="glyphicon glyphicon-pencil fa-lg"></a>
+              </td>
+              <td tal:content="table.title"/>
+              <td tal:content="table.table_name"/>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th style="text-align:center;">№</th>
+              <th>&nbsp;</th>
+              <th i18n:translate=''>Table name</th>
+              <th i18n:translate=''>Database table name</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </tal:block>
+  <tal:block metal:fill-slot="script-src">
+    <!-- DataTables -->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script>
+      $(function () {
+        $('#fetch-data').DataTable({
+          'paging'      : true,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : false
+        })
+      })
+</script>
+  </tal:block>
+</html>

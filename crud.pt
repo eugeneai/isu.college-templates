@@ -12,7 +12,51 @@
     </style>
   </tal:block>
   <tal:block metal:fill-slot="content">
-    <span tal:replace="structure content | view.content"/>
+    <span
+      tal:replace="structure content | view.content"/>
+    <span tal:condition="crudctx.action=='browse'">
+        <div>
+          <a href="" tal:attributes="href request.route_path('crud-action',
+                                            relation=crudctx.rel_name,
+                                            action='edit')"
+             class="btn btn-primary" i18n:translate="">Add new</a>
+        </div>
+
+        <table id="fetch-data" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th style="text-align:center;width:3em;">№</th>
+              <th>&nbsp;</th>
+              <th tal:repeat="f fields" tal:content="f.title">Rendering engine</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr tal:repeat="rec context">
+              <td tal:content="repeat['rec'].number" style="text-align:right;"></td>
+              <td width="1">
+                <a href="#" tal:attributes="href string:${request.route_path('crud-action',
+                                            relation=crudctx.rel_name,
+                                            action='edit')}?id=${getattr(rec,id)}"
+                   class="glyphicon glyphicon-pencil fa-lg"></a>
+              </td>
+              <td tal:repeat="f fields" tal:content="getattr(rec, f.name)">Trident</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th style="text-align:center;">№</th>
+              <th>&nbsp;</th>
+              <th tal:repeat="f fields" tal:content="f.title">Rendering engine</th>
+            </tr>
+          </tfoot>
+        </table>
+        <div>
+          <a href="" tal:attributes="href request.route_path('crud-action',
+                                            relation=crudctx.rel_name,
+                                            action='edit')"
+             class="btn btn-primary" i18n:translate="">Add new</a>
+        </div>
+    </span>
   </tal:block>
   <tal:black metal:fill-slot="script-src">
     <script type="text/javascript"
@@ -21,5 +65,20 @@
             src="/deform/scripts/deform.js"></script>
     <script type="text/javascript"
             src="/APPSD/js/jquery.maskedinput.min.js"></script>
+    <!-- DataTables -->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script tal:condition="crudctx.action=='browse'">
+      $(function () {
+        $('#fetch-data').DataTable({
+          'paging'      : true,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : false
+        })
+      })
+    </script>
   </tal:black>
 </html>

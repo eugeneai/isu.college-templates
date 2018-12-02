@@ -64,6 +64,6 @@
           'autoWidth'   : false
         })
       })
-</script>
+    </script>
   </tal:block>
 </html>

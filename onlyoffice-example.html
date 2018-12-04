@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>ONLYOFFICE</title>
+    <link rel="icon"
+        href="images/text.ico"
+        type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/editor.css" />
+</head>
+<body>
+    <div class="form">
+        <div id="iframeEditor">
+        </div>
+    </div>
+    <script type="text/javascript" src="http://172.18.0.2/web-apps/apps/api/documents/api.js"></script>
+    <script type="text/javascript" language="javascript">
+
+        var docEditor;
+
+        var innerAlert = function (message) {
+            if (console && console.log)
+                console.log(message);
+        };
+
+        var onReady = function () {
+            innerAlert("Document editor ready");
+        };
+
+        var onDocumentStateChange = function (event) {
+            var title = document.title.replace(/\*$/g, "");
+            document.title = title + (event.data ? "*" : "");
+        };
+
+        var onRequestEditRights = function () {
+            location.href = location.href.replace(RegExp("mode=view\&?", "i"), "");
+        };
+
+        var onRequestHistory = function (event) {
+            var historyObj = [{"changes":null,"key":"1285152982","version":1,"created":"2017-01-01","user":{"id":"uid-1","name":"John Smith"}}] || null;
+
+            docEditor.refreshHistory(
+                {
+                    currentVersion: "1",
+                    history: historyObj
+                });
+        };
+
+        var onRequestHistoryData = function (data) {
+            var version = data.data;
+            var historyData = [{"version":1,"key":"1285152982","url":"http://center:3000/files/__ffff_192.168.24.2/"}] || null;
+
+            docEditor.setHistoryData(historyData[version-1]);
+        };
+
+        var onRequestHistoryClose = function (event){
+            document.location.reload();
+        };
+
+        var onError = function (event) {
+            if (event)
+                innerAlert(event.data);
+        };
+
+        var onOutdatedVersion = function (event) {
+            location.reload(true);
+        };
+
+        var connectEditor = function () {
+
+            docEditor = new DocsAPI.DocEditor("iframeEditor", {"width": "100%",
+"height": "100%",
+"type": "desktop",
+"documentType": "text",
+"token": "",
+"document": {
+    "title": "",
+    "url": "http://center:3000/files/__ffff_192.168.24.2/",
+    "fileType": "",
+    "key": "1285152982",
+    "info": {
+        "author": "Me",
+        "created": "Tue Dec 04 2018"
+    },
+    "permissions": {
+        "comment": true,
+        "download": true,
+        "edit": false,
+        "modifyFilter": true,
+        "review": true
+    }
+},
+"editorConfig": {
+    "mode": "view",
+    "lang": "en",
+    "callbackUrl": "http://center:3000/track?filename=&useraddress=__ffff_192.168.24.2",
+    "user": {
+        "id": "uid-1",
+        "name": "Jonn Smith"
+    },
+    "embedded": {
+        "saveUrl": "http://center:3000/files/__ffff_192.168.24.2/",
+        "embedUrl": "http://center:3000/files/__ffff_192.168.24.2/",
+        "shareUrl": "http://center:3000/files/__ffff_192.168.24.2/",
+        "toolbarDocked": "top"
+    },
+    "customization": {
+        "about": true,
+        "chat": true,
+        "comments": true,
+        "feedback": true,
+        "forcesave": false,
+        "goback": {
+            "url": "http://center:3000"
+        }
+    },
+    "fileChoiceUrl": "",
+    "plugins": {"pluginsData":[]}
+}
+,
+                    events: {
+                        "onReady": onReady,
+                        "onDocumentStateChange": onDocumentStateChange,
+                        'onRequestEditRights': onRequestEditRights,
+                        "onError": onError,
+                        "onRequestHistory":  onRequestHistory,
+                        "onRequestHistoryData": onRequestHistoryData,
+                        "onRequestHistoryClose": onRequestHistoryClose,
+                        "onOutdatedVersion": onOutdatedVersion,
+                    }
+            });
+
+            fixSize();
+        };
+
+        var fixSize = function () {
+            var wrapEl = document.getElementsByClassName("form");
+            if (wrapEl.length) {
+                wrapEl[0].style.height = screen.availHeight + "px";
+                window.scrollTo(0, -1);
+                wrapEl[0].style.height = window.innerHeight + "px";
+            }
+        };
+
+        if (window.addEventListener) {
+            window.addEventListener("load", connectEditor);
+            window.addEventListener("resize", fixSize);
+        } else if (window.attachEvent) {
+            window.attachEvent("onload", connectEditor);
+            window.attachEvent("onresize", fixSize);
+        }
+
+    </script>
+</body>
+</html>

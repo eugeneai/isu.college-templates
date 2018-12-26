@@ -1,2 +1,2 @@
 # isu.college-templates
-Page tamplates for ixx.college related projects
+Page templates for ixx.college related projects

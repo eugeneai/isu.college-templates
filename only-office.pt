@@ -20,23 +20,23 @@
   </tal:block>
   <tal:black metal:fill-slot="script-src">
 
-    <script type="text/javascript" src="http://172.18.0.2/web-apps/apps/api/documents/api.js"></script>
-    <script>
+    <script type="text/javascript" src="http://iscnet.ru:8188/web-apps/apps/api/documents/api.js"></script>
+    <script tal:define = "ooctx context.oocontext; doc ooctx.document">
       config = {
         "width": "100%",
         "height": "100%",
         "type": "desktop",
         "token": "",
         "document": {
-          "fileType": "docx",
-          "key": "Khirz6zTPdfd7",
-          "title": "Example Document Title.docx",
-          "url": "http://center.isclan.ru:8888/1.docx"
+          "fileType": "doc.ext",
+          "key": "${ooctx.key}",
+          "title": "${doc.title}",
+          "url": "${doc.url}"
         },
-        "documentType": "text",
-        // "editorConfig": {
-        //   "callbackUrl": "https://example.com/url-to-callback.ash"
-        // }
+        "documentType": "${doc.type}", // "text"
+        "editorConfig": {
+          "callbackUrl": "${ooctx.callback_url(request)}"
+        }
       };
       var docEditor = new DocsAPI.DocEditor("iframeEditor", config);
 

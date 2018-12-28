@@ -1,0 +1,36 @@
+<div
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    xmlns:ntal="http://example.org/namespaces/ntal"
+    i18n:domain="isu.webapp"
+    tal:replace="structure view.content | default"
+    metal:define-macro="page"
+>
+    <tal:slot metal:define-slot="content"
+              i18n:domain="isu.webapp">
+        <H1 i18n:translate="">List of files</H1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" i18n:translate="">#</th>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col" i18n:translate="">File name</th>
+                    <th scope="col" i18n:translate="">Mime type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr tal:repeat="file context">
+                    <th scope="row" tal:content="repeat['file'].number">1</th>
+                    <td ><a href="#"
+                         tal:attributes="href request.route_path('only-office', name=file.key)"
+                         class="glyphicon glyphicon-pencil fa-lg"></a></td>
+                    <td tal:content="file.name">1</td>
+                    <td tal:content="file.mime_type">1</td>
+                </tr>
+            </tbody>
+        </table>
+    </tal:slot>
+</div>

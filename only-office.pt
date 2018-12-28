@@ -28,14 +28,17 @@
         "type": "desktop",
         "token": "",
         "document": {
-          "fileType": "doc.ext",
+          "fileType": "${doc.ext}",
           "key": "${ooctx.key}",
-          "title": "${doc.title}",
-          "url": "${doc.url}"
+          "title": "${doc.name}",
+          "url": "${view.doc_url(doc)}"
         },
-        "documentType": "${doc.type}", // "text"
+        "documentType": "${view.doc_type(doc)}", // "text"
         "editorConfig": {
-          "callbackUrl": "${ooctx.callback_url(request)}"
+          "callbackUrl": "${view.callback_url(key=doc.key)}",
+          "customization": {
+            "forcesave":true
+          }
         }
       };
       var docEditor = new DocsAPI.DocEditor("iframeEditor", config);
